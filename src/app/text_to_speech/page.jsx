@@ -56,7 +56,7 @@ function TTS_Page() {
   const [ttsId, setTtsId] = useState("ttstest01");
   const [audios, setAudios] = useState([
     {
-      audioUrl: "http://localhost:3000/audios/1694179787573_response_audio.mp3",
+      audioUrl: "https://robin-ai.netlify.app/audios/1694179787573_response_audio.mp3",
       text: "Hey! Play this",
     },
   ]);
