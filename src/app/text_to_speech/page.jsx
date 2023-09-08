@@ -105,19 +105,20 @@ function TTS_Page() {
         });
 
         console.log(responce.data);
+
+        const newAudio = {
+          audioUrl: await responce.data.ttsAudioUrl,
+          text,
+        };
+
+        const updatedAudios = [...audios, newAudio];
+        setAudios(updatedAudios.reverse());
+        console.log(audios);
+        console.log("done");
+        setLodingAudio(false);
       } catch (error) {
         console.log(error);
       }
-
-      const newAudio = {
-        audioUrl: await responce.data.ttsAudioUrl,
-        text,
-      };
-
-      const updatedAudios = [...audios, newAudio];
-      setAudios(updatedAudios.reverse());
-      console.log(audios);
-      setLodingAudio(false);
     } else {
       setLodingAudio(false);
       alert("Please fill the Text box");
