@@ -6,7 +6,7 @@ export async function PUT(req) {
   const body = await req.json();
   const { text, ttsId, model_id } = body;
 
-  const apiLink = process.env.API_URI;
+  const apiLink = "https://api.elevenlabs.io/v1/text-to-speech/";
   const apiKey = process.env.API_KEY;
   const webLink = process.env.WEB_LINK;
 
