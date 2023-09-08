@@ -119,6 +119,7 @@ function TTS_Page() {
       console.log(audios);
       setLodingAudio(false);
     } else {
+      setLodingAudio(false);
       alert("Please fill the Text box");
     }
   };
