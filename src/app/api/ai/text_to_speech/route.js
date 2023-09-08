@@ -7,8 +7,8 @@ export async function PUT(req) {
   const { text, ttsId, model_id } = body;
 
   const apiLink = "https://api.elevenlabs.io/v1/text-to-speech/";
-  const apiKey = process.env.API_KEY;
-  const webLink = process.env.WEB_LINK;
+  // const apiKey = process.env.API_KEY;
+  const apiKey = "2198d19f86af47be7869e3a34d2a07eb";
 
   const CHUNK_SIZE = 1024;
   const url = apiLink + model_id;
@@ -53,7 +53,9 @@ export async function PUT(req) {
     });
 
     const link = audioFilePath.replace(/^public\//, "");
-    return NextResponse.json({ ttsAudioUrl: webLink + link });
+    return NextResponse.json({
+      ttsAudioUrl: "http://localhost:3000/" + link,
+    });
   } catch (error) {
     console.error("API request error:", error);
     return NextResponse.json({ error: "API request error" }, 500);
