@@ -174,7 +174,7 @@ function TTS_Page() {
         </div>
         <div className="overflow-y-scroll gap-2 rounded-md flex flex-col max-h-[20rem] ">
           {audios.map((data, i) => {
-            return <AudioPreview data={data} />;
+            return <AudioPreview key={i} data={data} />;
           })}
         </div>
       </div>
