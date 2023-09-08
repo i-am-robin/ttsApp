@@ -56,7 +56,8 @@ function TTS_Page() {
   const [ttsId, setTtsId] = useState("ttstest01");
   const [audios, setAudios] = useState([
     {
-      audioUrl: "https://robin-ai.netlify.app/audios/1694179787573_response_audio.mp3",
+      audioUrl:
+        "https://robin-ai.netlify.app/audios/1694179787573_response_audio.mp3",
       text: "Hey! Play this",
     },
   ]);
@@ -93,15 +94,20 @@ function TTS_Page() {
   const handleSubmit = async () => {
     if (!lodingAudio && text.trim() !== "") {
       setLodingAudio(true);
-      const responce = await axios.put("api/ai/text_to_speech", {
-        text,
-        uId,
-        ttsId: Date.now(),
-        model_id: modelId,
-        setTimeout: 50000,
-      });
 
-      console.log(responce.data);
+      try {
+        const responce = await axios.put("api/ai/text_to_speech", {
+          text,
+          uId,
+          ttsId: Date.now(),
+          model_id: modelId,
+          setTimeout: 50000,
+        });
+
+        console.log(responce.data);
+      } catch (error) {
+        console.log(error);
+      }
 
       const newAudio = {
         audioUrl: await responce.data.ttsAudioUrl,
