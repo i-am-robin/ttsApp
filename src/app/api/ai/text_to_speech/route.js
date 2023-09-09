@@ -1,20 +1,19 @@
+import axios from "axios";
 import { NextResponse } from "next/server";
-const axios = await import("axios");
-const fs = await import("fs");
 
 export async function PUT(req) {
   const body = await req.json();
-  const { text, ttsId, model_id } = body;
+  const { text, voiceId } = await body;
 
-  const apiLink = "https://api.elevenlabs.io/v1/text-to-speech/";
-  // const apiKey = process.env.API_KEY;
-  const apiKey = "2198d19f86af47be7869e3a34d2a07eb";
+  const apiKey = process.env.API_KEY;
+
+  console.log(text, voiceId);
 
   const CHUNK_SIZE = 1024;
-  const url = apiLink + model_id;
+  const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
   const headers = {
-    Accept: "application/json",
+    Accept: "audio/mpeg",
     "Content-Type": "application/json",
     "xi-api-key": apiKey,
   };
@@ -27,37 +26,18 @@ export async function PUT(req) {
       similarity_boost: 0.5,
     },
   };
+  const response = await fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(data),
+  });
 
-  const audioFilePath = `public/audios/${ttsId}_response_audio.mp3`;
-
-  try {
-    const response = await axios.default.post(url, data, {
-      headers: headers,
-      responseType: "stream",
-      timeout: 62000,
-    });
-
-    const writer = fs.default.createWriteStream(audioFilePath);
-    response.data.pipe(writer);
-
-    await new Promise((resolve, reject) => {
-      writer.on("finish", () => {
-        console.log("Audio file saved:", audioFilePath);
-        resolve();
-      });
-
-      writer.on("error", (err) => {
-        console.error("Error writing audio file:", err);
-        reject(err);
-      });
-    });
-
-    const link = audioFilePath.replace(/^public\//, "");
-    return NextResponse.json({
-      ttsAudioUrl: "http://localhost:3000/" + link,
-    });
-  } catch (error) {
-    console.error("API request error:", error);
-    return NextResponse.json({ error: "API request error" }, 500);
+  if (!response.ok) {
+    return NextResponse.json({ Error: "unkinow" });
   }
+
+  const arrayBuffer = await response.arrayBuffer();
+  const base64String = Buffer.from(arrayBuffer).toString("base64");
+
+  return NextResponse.json({ base64String });
 }
