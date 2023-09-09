@@ -95,7 +95,7 @@ function TTS_Page() {
       setLodingAudio(true);
 
       try {
-        const responce = await axios.put("api/ai/text_to_speech", {
+        const responce = await axios.post("api/ai/text_to_speech", {
           text,
           voiceId: modelId,
           setTimeout: 50000,

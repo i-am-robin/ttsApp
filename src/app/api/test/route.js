@@ -1,9 +1,12 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-export async function POST(req) {
-  const body = await req.json();
-  const { text, voiceId } = await body;
+export async function GET(req) {
+  //   const body = await req.json();
+  //   const { text, voiceId } = await body;
+
+  const text = "Hey how are you";
+  const voiceId = "21m00Tcm4TlvDq8ikWAM";
 
   const apiKey = process.env.API_KEY;
 
