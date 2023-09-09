@@ -125,8 +125,15 @@ function TTS_Page() {
     }
   };
 
+  const textSubmit = async () => {
+    const res = await axios.put("api/test", { text });
+
+    console.log(await res.data);
+  };
+
   return (
     <div className="bg-black h-screen  w-screen flex flex-col items-center justify-center">
+      <button onClick={textSubmit}>Testest</button>
       <div className="flex md:max-w-[50vw] lg:w-[40vw] flex-col gap-2 p-3">
         <div className="bg-grey_main w-full border border-active rounded-md  gap-3 border_prymary p-3 md:mx-0 flex flex-col">
           <textarea
