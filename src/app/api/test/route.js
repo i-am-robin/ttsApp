@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 
 export async function GET(req) {
-  await fs.writeFileSync("public/a.txt", Date.now());
+  await fs.writeFileSync("public/a.txt", Date());
 
   const txt = fs.readFileSync("public/a.txt", "utf-8");
   console.log(txt);
